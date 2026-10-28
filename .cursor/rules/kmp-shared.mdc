@@ -1,0 +1,19 @@
+---
+description: Kotlin Multiplatform rules for shared, core, and feature modules. Use when editing Kotlin under shared/, core/, or feature/.
+globs: shared/**/*.kt,core/**/*.kt,feature/**/*.kt
+alwaysApply: false
+---
+
+# KMP shared
+
+- Package root is `com.mvpmodular`. Match the Gradle path: `com.mvpmodular.feature.auth.api`, `com.mvpmodular.core.network`.
+- `:feature:<name>:api` holds models, repository interfaces, and use cases. Use cases return `Outcome<T, DomainError>`.
+- `:feature:<name>:impl` holds the repository, platform `actual`s, `UiState`, `ViewModel`, and `val <name>Module`. Repository and gateway classes are `internal`.
+- An impl depends on its own api, on other features' api modules, and on `:core:*`. It does not depend on another impl.
+- An api depends only on `:core:common` and other feature apis. It does not touch Ktor, SQL, or Koin.
+- Do not add `ServiceLoader`, classpath scanning, or dynamic feature delivery. Register Koin modules in `featureModules()` in `shared`.
+- Feature flags gate behavior inside an already-linked use case. They do not load code.
+- HTTP goes through `BffClient`. Platform engines stay in `androidMain` / `iosMain`.
+- Keep `expect`/`actual` for platform SDKs (billing, push, HTTP engine). iOS actuals exist even though Linux does not compile them.
+- Nested modules must keep a unique Gradle `group` (`com.mvpmodular.` + project path) and the path-based Kotlin module name from `mvp.kmp.library`. Do not set `group = "com.mvpmodular"` again.
+- New feature: follow the `new-feature-module` skill, including `settings.gradle.kts`, `AppBootstrap`, `SharedGraph`, and the `export` list in `mvp.kmp.shared.gradle.kts`.

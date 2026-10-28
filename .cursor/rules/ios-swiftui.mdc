@@ -1,0 +1,15 @@
+---
+description: SwiftUI rules for iosApp. Use when editing the iOS app or its Xcode project.
+globs: iosApp/**/*.swift,iosApp/**/*.pbxproj,iosApp/**/*.xcscheme
+alwaysApply: false
+---
+
+# iOS SwiftUI
+
+- Import `Shared`. Call `AppBootstrapKt.startApp()` once at launch, then resolve ViewModels from `SharedGraph.shared`.
+- Keep a thin `@MainActor` wrapper per screen. Publish Swift properties. Forward edits to the Kotlin ViewModel. Observe `viewModel.state` with `for await` (SKIE exposes `StateFlow` as an `AsyncSequence`). Read `state.value` for the first paint.
+- Do not duplicate validation or repository logic in Swift.
+- The app does not embed the framework. The Run Script phase runs `:shared:embedAndSignAppleFrameworkForXcode` unless `OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED` is `YES`. Leave `ENABLE_USER_SCRIPT_SANDBOXING = NO`.
+- Framework search path: `$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)`. Linker flag: `-framework Shared`.
+- Deployment target 16.0. Bundle id `com.mvpmodular.ios`. This prototype sets `CODE_SIGNING_ALLOWED` and `CODE_SIGNING_REQUIRED` to NO.
+- SKIE is applied on macOS only, inside the shared convention plugin. Linux cannot build this target.
