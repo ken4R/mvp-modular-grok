@@ -25,7 +25,10 @@ jobs:
           cache: gradle
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+        with:
+          # v3 defaulted to the removed "tools" package and failed sdkmanager.
+          log-accepted-android-sdk-licenses: false
 
       - name: Install SDK packages
         run: |
