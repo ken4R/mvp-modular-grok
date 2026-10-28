@@ -1,0 +1,9 @@
+-- Planned SQLDelight schema. Not compiled in this MVP: the Android KMP library plugin
+-- plus native SQLite drivers are heavier than the login slice needs. :core:storage
+-- currently ships InMemoryKeyValueStore behind KeyValueStore.
+
+CREATE TABLE session (
+    userId TEXT NOT NULL PRIMARY KEY,
+    email TEXT NOT NULL,
+    token TEXT NOT NULL
+);

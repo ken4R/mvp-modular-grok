@@ -1,0 +1,17 @@
+disabled_rules:
+  - trailing_comma
+  - identifier_name
+  - todo
+
+opt_in_rules: []
+
+line_length:
+  warning: 140
+  error: 200
+
+excluded:
+  - .build
+  - build
+  - DerivedData
+
+reporter: "xcode"

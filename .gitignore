@@ -1,0 +1,36 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Android / JVM
+local.properties
+.cxx/
+.externalNativeBuild/
+captures/
+*.iml
+.idea/
+.kotlin/
+
+# iOS / Xcode
+DerivedData/
+*.xcuserstate
+**/xcuserdata/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# OS / editors
+.DS_Store
+*.log
+
+# BMAD generated output (the installation under _bmad/ is committed)
+_bmad-output/
+docs/bmad-output/
+_bmad/config.user.toml
+__pycache__/
+*.pyc
+
+# Node (BMAD installer)
+node_modules/

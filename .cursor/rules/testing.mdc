@@ -1,0 +1,15 @@
+---
+description: Test rules for KMP host tests, Konsist, and architecture checks. Use when editing tests or the architecture-test module.
+globs: "**/*Test.kt,architecture-test/**/*.kt"
+alwaysApply: false
+---
+
+# Testing
+
+- Use-case tests live in the api module `commonTest`. Repository and ViewModel tests live in the impl `commonTest`.
+- Drive use cases with a fake repository declared in the test. Assert `Outcome.Success` / `Outcome.Failure` and the `DomainError` subtype. Assert the repository was not called when validation fails.
+- ViewModel tests set `Dispatchers.setMain(UnconfinedTestDispatcher())` and reset the main dispatcher. `viewModelScope` uses `Main`.
+- Host tests run with `./gradlew :module:testAndroidHostTest` (source set `androidHostTest` via `withHostTest`).
+- Konsist scans relative directories `feature` and `core` (`scopeFromDirectory`). Do not pass an absolute path: Konsist prefixes the repo root.
+- `checkModuleBoundaries` must stay on `check`. A new module that applies `mvp.kmp.library` or `mvp.android.application` gets the task.
+- Do not weaken a boundary test to make a forbidden dependency pass. Move the type to the api, or depend on that api.

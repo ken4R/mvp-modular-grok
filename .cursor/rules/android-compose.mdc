@@ -1,0 +1,15 @@
+---
+description: Android Compose rules for androidApp. Use when editing the Android application.
+globs: androidApp/**/*.kt,androidApp/**/*.xml
+alwaysApply: false
+---
+
+# Android Compose
+
+- `androidApp` depends only on `:shared`. Do not add a Gradle dependency on `:feature:*` or `:core:*`.
+- Collect shared `StateFlow` with `collectAsStateWithLifecycle`. Obtain ViewModels with `koinViewModel()`.
+- `MvpApplication` calls `initAppKoin` and passes `androidContext`. Do not start a second Koin graph.
+- Screens stay thin: state in, events out. Business rules stay in the shared use case.
+- User-visible strings go in `res/values/strings.xml` in French.
+- `compileSdk` is 37, `minSdk` 26, `targetSdk` 36, JVM target 21. Do not lower `compileSdk` (OkHttp 5.5 requires 37).
+- Compose compiler plugin is applied by `mvp.android.application`. Do not add a second Kotlin Android plugin.

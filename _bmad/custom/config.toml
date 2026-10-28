@@ -1,0 +1,8 @@
+# Team overrides. Committed. Wins over the installer-managed _bmad/config.toml.
+
+[core]
+user_name = "MVP Modular"
+project_name = "mvp-modular"
+communication_language = "French"
+document_output_language = "French"
+output_folder = "_bmad-output"
